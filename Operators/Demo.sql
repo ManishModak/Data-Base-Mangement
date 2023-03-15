@@ -35,16 +35,13 @@ insert into orders values(113,'Roti',3) ;
 insert into orders values(114,'veggie',4) ;
 insert into orders values(114,'veggie',1) ;
 
-select * from orders 
-where OrderId = 111 ;
+select * from orders where OrderId = 111 ;
 
 select 20 + 30 ;
 
-select * from orders
-where OrderName In ('Rice','Roti') ;
+select * from orders where OrderName In ('Rice','Roti') ;
 
-SELECT * FROM orders
-WHERE OrderName NOT LIKE 's%';
+SELECT * FROM orders WHERE OrderName NOT LIKE 's%';
 
 select * from orders where OrderName like 'R%' ;
 
