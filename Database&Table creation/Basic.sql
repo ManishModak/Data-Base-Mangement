@@ -5,11 +5,11 @@ use sib14 ;
 show tables ;
 
 create table person(
-		ID int ,
-		Name varchar(200),
+	ID int ,
+	Name varchar(200),
         Age int ,
         primary key(ID)
-	) ;
+) ;
     
 desc person ;
 
@@ -21,10 +21,10 @@ select * from person ;
 
 create table orders (
 	OrderId int not null,
-    OrderName varchar(200) not null,
-    PersonId int ,
-    primary key(OrderId) ,
-    foreign key(PersonId) references person(ID) 
+    	OrderName varchar(200) not null,
+   	PersonId int ,
+   	primary key(OrderId) ,
+    	foreign key(PersonId) references person(ID) 
 );
 
 desc orders ;
