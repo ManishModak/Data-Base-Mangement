@@ -1,0 +1,87 @@
+Lab Assignment - 08 (Stored Procedure And Functions)
+Manish Modak
+SIB14
+SE-IT-B
+
+---------------------------------------------------------------------
+
+mysql> use manish ;
+Database changed
+
+
+--------------------------STORED PROCEDURE--------------------------
+
+
+mysql> Select * From Students ;
+
++--------+--------+----------+
+| rollno | name   | address  |
++--------+--------+----------+
+|      1 | Manish | Buldhana |
+|      2 | Suyog  | Pune     |
+|      3 | Aman   | Nagpur   |
+|      4 | Raj    | Hingoli  |
++--------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+
+mysql> CREATE PROCEDURE InsertStudent
+(IN Rollno INT,IN Name varchar(50),IN address varchar(50))   //Creating Stored Procedure
+    -> BEGIN
+    -> INSERT INTO Students values(Rollno,Name,Address);
+    -> END //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DELIMITER ;
+
+mysql> CALL InsertStudent(5,"Tanmay","Pune") ;   // Calling Stored procedure
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Select * FROM students ;
++--------+--------+----------+
+| rollno | name   | address  |
++--------+--------+----------+
+|      1 | Manish | Buldhana |
+|      2 | Suyog  | Pune     |
+|      3 | Aman   | Nagpur   |
+|      4 | Raj    | Hingoli  |
+|      5 | Tanmay | Pune     |
++--------+--------+----------+
+5 rows in set (0.00 sec)
+
+--------------------------------FUNCTIONS---------------------------------
+
+mysql> Select * from marks ;
++--------+--------+------+------+
+| Rollno | name   | age  | Mark |
++--------+--------+------+------+
+|      1 | Manish |   19 |   81 |
+|      2 | Suyog  |   20 |   83 |
+|      3 | Aman   |   19 |   80 |
+|      4 | Raj    |   20 |   85 |
+|      5 | tanmay | NULL |   80 |
++--------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+
+mysql> CREATE FUNCTION GetAvgMarks()               // Creating Function
+    -> RETURNS DECIMAL(10,2)
+    -> BEGIN
+    ->  DECLARE avg_marks DECIMAL(10,2) ;
+    ->  Select AVG(Mark) Into avg_marks FROM marks ;
+    ->  RETURN avg_marks ;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DELIMITER ;
+
+mysql> SELECT GetAvgMarks() ;              // Invoking Function
++---------------+
+| GetAvgMarks() |
++---------------+
+|         81.80 |
++---------------+
+1 row in set (0.01 sec)

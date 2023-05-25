@@ -1,0 +1,170 @@
+Name : Manish Modak 
+Roll No : SIB14 
+Lab Assignment 1
+---------------------------------------------------------------
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| myrestaurant       |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sib14              |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use sib14 ;
+Database changed
+mysql> show tables ;
+Empty set (0.01 sec)
+
+mysql> create table person(
+    -> Id int ,
+    -> Name varchar(50) ,
+    -> Age int ,
+    -> primary key(Id) ) ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc person ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Id    | int         | NO   | PRI | NULL    |       |
+| Name  | varchar(50) | YES  |     | NULL    |       |
+| Age   | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into person values (1,'Manish',20) ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into person values (2,'Aman',21) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values (3,'Suyog',20) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from person ;
++----+--------+------+
+| Id | Name   | Age  |
++----+--------+------+
+|  1 | Manish |   20 |
+|  2 | Aman   |   21 |
+|  3 | Suyog  |   20 |
++----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> create table orders (
+    -> OrderId int not null ,
+    -> OrderName varchar(200) not null,
+    -> PersonId int ,
+    -> primary key(OrderId) ,
+    -> foreign key(PersonId) references person(Id) ) ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from orders ;
+Empty set (0.00 sec)
+
+mysql> desc orders ;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| OrderId   | int          | NO   | PRI | NULL    |       |
+| OrderName | varchar(200) | NO   |     | NULL    |       |
+| PersonId  | int          | YES  | MUL | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into orders values(111,'Maggie',1) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into orders values(112,'Rice',2) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into orders values(113,'Roti',3) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into orders values(114,'veggie',1) ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from orders ;
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     111 | Maggie    |        1 |
+|     112 | Rice      |        2 |
+|     113 | Roti      |        3 |
+|     114 | veggie    |        1 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Person ADD Email int ;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc person ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Id    | int         | NO   | PRI | NULL    |       |
+| Name  | varchar(50) | YES  |     | NULL    |       |
+| Age   | int         | YES  |     | NULL    |       |
+| Email | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE person MODIFY COLUMN Email varchar(50) ;
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DESC person ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Id    | int         | NO   | PRI | NULL    |       |
+| Name  | varchar(50) | YES  |     | NULL    |       |
+| Age   | int         | YES  |     | NULL    |       |
+| Email | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table temp (
+    -> temp1 int ,
+    -> temp2 varchar(50) ,
+    -> primary key(temp1) );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc temp ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| temp1 | int         | NO   | PRI | NULL    |       |
+| temp2 | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> show tables ;
++-----------------+
+| Tables_in_sib14 |
++-----------------+
+| orders          |
+| person          |
+| temp            |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> DROP TABLE temp ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables ;
++-----------------+
+| Tables_in_sib14 |
++-----------------+
+| orders          |
+| person          |
++-----------------+
+2 rows in set (0.00 sec)

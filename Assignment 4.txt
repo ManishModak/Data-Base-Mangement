@@ -1,0 +1,226 @@
+NAME : Manish Modak 
+ROll NO : SIB 14
+Assignment No 4
+
+-------------------------------------------------------------
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| myrestaurant       |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sib14              |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.05 sec)
+
+mysql> use sib14 ;
+Database changed
+mysql> show tables ;
++----------------------+
+| Tables_in_sib14      |
++----------------------+
+| customers            |
+| first_three_students |
+| markview             |
+| orders               |
+| person               |
+| sampleview           |
+| studentdetails       |
+| studentmarks         |
++----------------------+
+8 rows in set (0.01 sec)
+
+------------------------------------------------------------------
+mysql> CREATE TABLE Admin(
+    ->  A_Id int ,
+    ->  Name varchar(50) ,
+    ->  primary key(A_Id) ) ;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc Admin ;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| A_Id  | int         | NO   | PRI | NULL    |       |
+| Name  | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into admin values (1,'Manish'),(2,'Tanmay') ;
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from admin ;
++------+--------+
+| A_Id | Name   |
++------+--------+
+|    1 | Manish |
+|    2 | Tanmay |
++------+--------+
+2 rows in set (0.00 sec)
+
+----------------------------------------------------------------------
+mysql> CREATE TABLE Student(
+    -> S_Id int primary key ,
+    -> Name varchar(50) ,
+    -> gender varchar(50) ,
+    -> Branch varchar(50) ,
+    -> Id int ,
+    -> foreign key(Id) references Admin(A_Id) ) ;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc student ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| S_Id   | int         | NO   | PRI | NULL    |       |
+| Name   | varchar(50) | YES  |     | NULL    |       |
+| gender | varchar(50) | YES  |     | NULL    |       |
+| Branch | varchar(50) | YES  |     | NULL    |       |
+| Id     | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into student values ( 111,"Suyog Pawar","Male", "IT", 1) ,
+    -> ( 112,"Abhishek Fadke", "Male", "Comp", 2) ,
+    -> (113,"Prathmesh Nagawade","Male","Comp",2) ,
+    -> (114,"Samiksha Modak","Female","IT",1) ,
+    -> (115,"Raj Waghmare","Male","IT",1) ;
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> Select * from student ;
++------+--------------------+--------+--------+------+
+| S_Id | Name               | gender | Branch | Id   |
++------+--------------------+--------+--------+------+
+|  111 | Suyog Pawar        | Male   | IT     |    1 |
+|  112 | Abhishek Fadke     | Male   | Comp   |    2 |
+|  113 | Prathmesh Nagawade | Male   | Comp   |    2 |
+|  114 | Samiksha Modak     | Female | IT     |    1 |
+|  115 | Raj Waghmare       | Male   | IT     |    1 |
++------+--------------------+--------+--------+------+
+5 rows in set (0.00 sec)
+
+--------------------------------------------------------------------
+mysql> CREATE TABLE Publisher(
+    -> P_Id int primary key,
+    -> P_Name varchar(50) ,
+    -> P_year year ) ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc Publisher ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| P_Id   | int         | NO   | PRI | NULL    |       |
+| P_Name | varchar(50) | YES  |     | NULL    |       |
+| P_year | year        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into publisher values
+    -> (121,"Fintech",2019),
+    -> (122,"Amazon",2000),
+    -> (123,"Bacardi",2010) ;
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PUBLISHER ;
++------+---------+--------+
+| P_Id | P_Name  | P_year |
++------+---------+--------+
+|  121 | Fintech |   2019 |
+|  122 | Amazon  |   2000 |
+|  123 | Bacardi |   2010 |
++------+---------+--------+
+3 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------
+mysql>  CREATE TABLE Book (
+    ->  B_id int primary key ,
+    ->  Bname varchar(50) ,
+    ->  price int ,
+    -> author_name varchar(10) ,
+    -> quantity int ,
+    ->  sid int,foreign key(sid) references student(S_Id) ,
+    ->  id int,foreign key(id) references admin(A_Id),
+    -> pid int,foreign key(pid) references publisher(P_Id) ) ;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc book ;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| B_id        | int         | NO   | PRI | NULL    |       |
+| Bname       | varchar(50) | YES  |     | NULL    |       |
+| price       | int         | YES  |     | NULL    |       |
+| author_name | varchar(10) | YES  |     | NULL    |       |
+| quantity    | int         | YES  |     | NULL    |       |
+| sid         | int         | YES  | MUL | NULL    |       |
+| id          | int         | YES  | MUL | NULL    |       |
+| pid         | int         | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql> insert into book values
+    ->  (101,"DBMS",450,"John",5,111,1,121),
+    -> (102,"M3",500,"Mackgaw",4,113,2,122),
+    -> (103,"SE",600,"Hill",5,112,2,123),
+    -> (104,"PA",550,"Kenneth",4,115,1,121) ;
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM BOOK ;
++------+-------+-------+-------------+----------+------+------+------+
+| B_id | Bname | price | author_name | quantity | sid  | id   | pid  |
++------+-------+-------+-------------+----------+------+------+------+
+|  101 | DBMS  |   450 | John        |        5 |  111 |    1 |  121 |
+|  102 | M3    |   500 | Mackgaw     |        4 |  113 |    2 |  122 |
+|  103 | SE    |   600 | Hill        |        5 |  112 |    2 |  123 |
+|  104 | PA    |   550 | Kenneth     |        4 |  115 |    1 |  121 |
++------+-------+-------+-------------+----------+------+------+------+
+4 rows in set (0.00 sec)
+
+-----------------------------------------------------------------------------------------------
+mysql> create table borrow(doi date , return_date date, duedate date, sid int not null ,
+    -> foreign key(sid) references student(S_Id) ,
+    -> bid int not null ,foreign key(bid) references book(B_id) ,
+    -> unique(sid,bid) ) ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc borrow ;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| doi         | date | YES  |     | NULL    |       |
+| return_date | date | YES  |     | NULL    |       |
+| duedate     | date | YES  |     | NULL    |       |
+| sid         | int  | NO   | PRI | NULL    |       |
+| bid         | int  | NO   | PRI | NULL    |       |
++-------------+------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>  insert into borrow values
+    -> ("2023-03-15","2023-03-19","2023-03-22",111,101),
+    -> ("2023-03-10","2023-03-12","2023-03-14",112,102),
+    -> ("2023-02-22","2023-02-24","2023-02-26",115,104) ;
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from borrow ;
++------------+-------------+------------+-----+-----+
+| doi        | return_date | duedate    | sid | bid |
++------------+-------------+------------+-----+-----+
+| 2023-03-15 | 2023-03-19  | 2023-03-22 | 111 | 101 |
+| 2023-03-10 | 2023-03-12  | 2023-03-14 | 112 | 102 |
+| 2023-02-22 | 2023-02-24  | 2023-02-26 | 115 | 104 |
++------------+-------------+------------+-----+-----+
+3 rows in set (0.00 sec)
+-------------------------------------------------------------------------
+
+

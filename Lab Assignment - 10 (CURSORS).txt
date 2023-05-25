@@ -1,0 +1,134 @@
+Lab Assignment - 10 (CURSORS)
+Manish Modak
+SIB14
+SE-IT-B
+
+---------------------------------------------------------------------
+
+mysql> USE SIB14 ;
+Database changed
+
+mysql> CREATE TABLE employees (
+    ->   id INT PRIMARY KEY,
+    ->   name VARCHAR(50),
+    ->   salary DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> INSERT INTO employees VALUES
+    -> (1, 'Tanjiro', 3000),
+    -> (2, 'Inosuke', 4000),
+    -> (3, 'Zenitsu', 4500);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql>
+mysql> CREATE PROCEDURE ProcessEmployees()
+    -> BEGIN
+    ->   -- Declare cursor
+    ->   DECLARE emp_id INT;
+    ->   DECLARE emp_name VARCHAR(50);
+    ->   DECLARE emp_salary DECIMAL(10, 2);
+    ->
+    ->   -- Declare variables
+    ->   DECLARE done INT DEFAULT FALSE;
+    ->
+    ->   -- Declare cursor for SELECT query
+    ->   DECLARE cur CURSOR FOR
+    ->     SELECT id, name, salary FROM employees;
+    ->
+    ->   -- Declare handlers
+    ->   DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    ->
+    ->   -- Open cursor
+    ->   OPEN cur;
+    ->
+    ->   -- Fetch cursor data
+    ->   FETCH cur INTO emp_id, emp_name, emp_salary;
+    ->
+    ->   -- Process data using LOOP
+    ->   WHILE NOT done DO
+    ->     -- Perform operations on fetched data
+    ->     -- (You can replace the SELECT statements with your own logic)
+    ->     SELECT CONCAT('Employee ID: ', emp_id);
+    ->     SELECT CONCAT('Employee Name: ', emp_name);
+    ->     SELECT CONCAT('Employee Salary: ', emp_salary);
+    ->
+    ->     -- Fetch next row
+    ->     FETCH cur INTO emp_id, emp_name, emp_salary;
+    ->   END WHILE;
+    ->
+    ->   -- Close cursor
+    ->   CLOSE cur;
+    -> END //
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> DELIMITER ;
+mysql> CALL ProcessEmployees();
++---------------------------------+
+| CONCAT('Employee ID: ', emp_id) |
++---------------------------------+
+| Employee ID: 1                  |
++---------------------------------+
+1 row in set (0.00 sec)
+
++-------------------------------------+
+| CONCAT('Employee Name: ', emp_name) |
++-------------------------------------+
+| Employee Name: Tanjiro              |
++-------------------------------------+
+1 row in set (0.00 sec)
+
++-----------------------------------------+
+| CONCAT('Employee Salary: ', emp_salary) |
++-----------------------------------------+
+| Employee Salary: 3000.00                |
++-----------------------------------------+
+1 row in set (0.00 sec)
+
++---------------------------------+
+| CONCAT('Employee ID: ', emp_id) |
++---------------------------------+
+| Employee ID: 2                  |
++---------------------------------+
+1 row in set (0.01 sec)
+
++-------------------------------------+
+| CONCAT('Employee Name: ', emp_name) |
++-------------------------------------+
+| Employee Name: Inosuke              |
++-------------------------------------+
+1 row in set (0.01 sec)
+
++-----------------------------------------+
+| CONCAT('Employee Salary: ', emp_salary) |
++-----------------------------------------+
+| Employee Salary: 4000.00                |
++-----------------------------------------+
+1 row in set (0.01 sec)
+
++---------------------------------+
+| CONCAT('Employee ID: ', emp_id) |
++---------------------------------+
+| Employee ID: 3                  |
++---------------------------------+
+1 row in set (0.01 sec)
+
++-------------------------------------+
+| CONCAT('Employee Name: ', emp_name) |
++-------------------------------------+
+| Employee Name: Zenitsu         	  |
++-------------------------------------+
+1 row in set (0.01 sec)
+
++-----------------------------------------+
+| CONCAT('Employee Salary: ', emp_salary) |
++-----------------------------------------+
+| Employee Salary: 4500.00                |
++-----------------------------------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+

@@ -1,0 +1,275 @@
+Name : Manish Modak 
+Roll No : SIB14 
+Lab Assignment 
+---------------------------------------------------------------
+mysql> show databases ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| myrestaurant       |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sib14              |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use sib14 ;
+Database changed
+
+mysql> create table person(
+    -> Id int ,
+    -> Name varchar(50) ,
+    -> Age int ,
+    -> primary key(Id) ) ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from person ;
++----+--------+------+
+| Id | Name   | Age  |
++----+--------+------+
+|  1 | Manish |   20 |
+|  2 | Aman   |   21 |
+|  3 | Suyog  |   20 |
++----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from orders ;
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     111 | Maggie    |        1 |
+|     112 | Rice      |        2 |
+|     113 | Roti      |        3 |
+|     114 | veggie    |        1 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from orders where OrderId = 111 ;
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     111 | Maggie    |        1 |
++---------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select 20 + 30 ;
++---------+
+| 20 + 30 |
++---------+
+|      50 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select * from orders where OrderName In ('Rice','Roti') ;
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     112 | Rice      |        2 |
+|     113 | Roti      |        3 |
++---------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM orders WHERE OrderName NOT LIKE 's%';
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     111 | Maggie    |        1 |
+|     112 | Rice      |        2 |
+|     113 | Roti      |        3 |
+|     114 | veggie    |        1 |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from orders where OrderName like 'R%' ;
++---------+-----------+----------+
+| OrderId | OrderName | PersonId |
++---------+-----------+----------+
+|     112 | Rice      |        2 |
+|     113 | Roti      |        3 |
++---------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select min(OrderId) from orders ;
++--------------+
+| min(OrderId) |
++--------------+
+|          111 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select max(OrderId) from orders ;
++--------------+
+| max(OrderId) |
++--------------+
+|          114 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(OrderId) from orders ;
++--------------+
+| sum(OrderId) |
++--------------+
+|          450 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select count(OrderId) from orders ;
++----------------+
+| count(OrderId) |
++----------------+
+|              4 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select round(avg(OrderId),2) from orders ;
++-----------------------+
+| round(avg(OrderId),2) |
++-----------------------+
+|                112.50 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> select curdate() ;
++------------+
+| curdate()  |
++------------+
+| 2023-04-11 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select current_date() ;
++----------------+
+| current_date() |
++----------------+
+| 2023-04-11     |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select current_time() ;
++----------------+
+| current_time() |
++----------------+
+| 23:23:56       |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select current_timestamp() ;
++---------------------+
+| current_timestamp() |
++---------------------+
+| 2023-04-11 23:24:02 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select adddate('1997-01-20',31) ;
++--------------------------+
+| adddate('1997-01-20',31) |
++--------------------------+
+| 1997-02-20               |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date('2004-12-31 01:02:03' ) ;
++------------------------------+
+| date('2004-12-31 01:02:03' ) |
++------------------------------+
+| 2004-12-31                   |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql>  drop table orders ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table customers(
+    -> CustomerID int,
+    -> CustomerName varchar(50),
+    -> Country varchar(50) ) ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table orders(
+    -> OrderId int ,
+    -> CustomerId int,
+    -> OrderDate date ,
+    -> ShipperId int );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into orders values (10308,2,'1996-09-18',3) ,
+    ->  (10309,3,'1996-09-19',1) ,
+    ->     (10310,4,'1996-09-20',2) ,
+    ->     (10311,4,'1996-09-21',3) ,
+    ->     (10312,5,'1996-09-22',3) ;
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into customers values (1,'Manish','US'),
+    ->    (2,'Aman','spain') ,
+    ->     (3,'suyog','france') ,
+    ->     (4,'abhi','canada') ;
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders ;
++---------+------------+------------+-----------+
+| OrderId | CustomerId | OrderDate  | ShipperId |
++---------+------------+------------+-----------+
+|   10308 |          2 | 1996-09-18 |         3 |
+|   10309 |          3 | 1996-09-19 |         1 |
+|   10310 |          4 | 1996-09-20 |         2 |
+|   10311 |          4 | 1996-09-21 |         3 |
+|   10312 |          5 | 1996-09-22 |         3 |
++---------+------------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers ;
++------------+--------------+---------+
+| CustomerID | CustomerName | Country |
++------------+--------------+---------+
+|          1 | Manish       | US      |
+|          2 | Aman         | spain   |
+|          3 | suyog        | france  |
+|          4 | abhi         | canada  |
++------------+--------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select orders.OrderId,Customers.CustomerName,Customers.Country,orders.OrderDate from Orders Inner join customers on orders.CustomerId = Customers.CustomerID order by OrderId ;
++---------+--------------+---------+------------+
+| OrderId | CustomerName | Country | OrderDate  |
++---------+--------------+---------+------------+
+|   10308 | Aman         | spain   | 1996-09-18 |
+|   10309 | suyog        | france  | 1996-09-19 |
+|   10310 | abhi         | canada  | 1996-09-20 |
+|   10311 | abhi         | canada  | 1996-09-21 |
++---------+--------------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select orders.OrderID , Customers.CustomerName , Customers.Country , orders.OrderDate from Orders
+    -> left join customers on orders.CustomerID = Customers.CustomerID
+    -> order by orderId;
++---------+--------------+---------+------------+
+| OrderID | CustomerName | Country | OrderDate  |
++---------+--------------+---------+------------+
+|   10308 | Aman         | spain   | 1996-09-18 |
+|   10309 | suyog        | france  | 1996-09-19 |
+|   10310 | abhi         | canada  | 1996-09-20 |
+|   10311 | abhi         | canada  | 1996-09-21 |
+|   10312 | NULL         | NULL    | 1996-09-22 |
++---------+--------------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select orders.OrderID , Customers.CustomerName , Customers.Country , orders.OrderDate from Orders
+    -> right join customers on orders.CustomerID = Customers.CustomerID
+    -> order by orderId;
++---------+--------------+---------+------------+
+| OrderID | CustomerName | Country | OrderDate  |
++---------+--------------+---------+------------+
+|    NULL | Manish       | US      | NULL       |
+|   10308 | Aman         | spain   | 1996-09-18 |
+|   10309 | suyog        | france  | 1996-09-19 |
+|   10310 | abhi         | canada  | 1996-09-20 |
+|   10311 | abhi         | canada  | 1996-09-21 |
++---------+--------------+---------+------------+
+5 rows in set (0.00 sec)

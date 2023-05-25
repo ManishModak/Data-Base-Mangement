@@ -1,0 +1,111 @@
+Lab Assignment - 07 (Views)
+Manish Modak
+SIB14
+SE-IT-B
+
+---------------------------------------------------------------------
+
+mysql> use manish ;
+Database changed
+
+mysql> create table students(
+    -> rollno INT primary key ,
+    -> name varchar(50) ,
+    -> address varchar(50) ) ;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into Students(rollno , name , address) values
+    -> (1,"Manish","Buldhana") ,
+    -> (2,"Suyog","Pune") ,
+    -> (3,"Aman" ,"Nagpur"),
+    -> (4,"Raj","Hingoli") ;
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * From students ;
++--------+--------+----------+
+| rollno | name   | address  |
++--------+--------+----------+
+|      1 | Manish | Buldhana |
+|      2 | Suyog  | Pune     |
+|      3 | Aman   | Nagpur   |
+|      4 | Raj    | Hingoli  |
++--------+--------+----------+
+4 rows in set (0.01 sec)
+
+mysql> Create View name_address_view            // Creating view
+    -> As Select name,address From students ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from name_address_view ;    // Displaying View
++--------+----------+
+| name   | address  |
++--------+----------+
+| Manish | Buldhana |
+| Suyog  | Pune     |
+| Aman   | Nagpur   |
+| Raj    | Hingoli  |
++--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> create table marks (
+    -> Rollno INT ,
+    -> name varchar(50) ,
+    -> age INT ,
+    -> Mark INT ) ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into marks values
+    -> (1,"Manish", 19 , 81) ,
+    -> (2,"Suyog",20,83) ,
+    -> (3,"Aman" ,19 ,80) ,
+    -> (4,"Raj",20,85) ;
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> create view marks_view As
+    -> SELECT name,age,mark
+    -> FROM marks
+    -> WHERE NAME IS NOT NULL
+    -> WITH CHECK OPTION ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> Drop view marks_view ;           // Deleting view 
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create view marks_view As
+    -> SELECT Rollno,name,mark
+    -> FROM marks
+    -> WHERE NAME IS NOT NULL
+    -> WITH CHECK OPTION ;              // Creating view with check option
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Insert into marks_view values(5,"tanmay",80) ;   //Inserting values in view
+Query OK, 1 row affected (0.00 sec)
+
+mysql> Insert into marks_view values(6,NULL,80) ;
+ERROR 1369 (HY000): CHECK OPTION failed 'manish.marks_view' // check condition failed
+
+mysql> Select * from marks_view ;
++--------+--------+------+
+| Rollno | name   | mark |
++--------+--------+------+
+|      1 | Manish |   81 |
+|      2 | Suyog  |   83 |
+|      3 | Aman   |   80 |
+|      4 | Raj    |   85 |
+|      5 | tanmay |   80 |
++--------+--------+------+
+5 rows in set (0.00 sec)
+
+mysql> Select * from marks ;
++--------+--------+------+------+
+| Rollno | name   | age  | Mark |
++--------+--------+------+------+
+|      1 | Manish |   19 |   81 |
+|      2 | Suyog  |   20 |   83 |
+|      3 | Aman   |   19 |   80 |
+|      4 | Raj    |   20 |   85 |
+|      5 | tanmay | NULL |   80 |
++--------+--------+------+------+
+5 rows in set (0.00 sec)
